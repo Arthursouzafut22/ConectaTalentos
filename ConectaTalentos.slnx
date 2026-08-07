@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ConectaTalentos.Application/ConectaTalentos.Application.csproj" />
+  <Project Path="ConectaTalentos.Domain/ConectaTalentos.Domain.csproj" />
+  <Project Path="ConectaTalentos.Infrastructure/ConectaTalentos.Infrastructure.csproj" />
+  <Project Path="ConectaTalentos/ConectaTalentos.csproj" />
+</Solution>
