@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConectaTalentos.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2b9de8de75767dc5ed9d7840fb6fd7b89efe133")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConectaTalentos.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConectaTalentos.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

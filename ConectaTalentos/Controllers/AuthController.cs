@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ConectaTalentos.Api.Controllers
+namespace ConectaTalentos.Controllers
 {
     [Route("v1/[controller]")]
     [ApiController]
