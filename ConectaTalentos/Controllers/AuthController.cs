@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ConectaTalentos.Application.DTOs.Account;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ConectaTalentos.Controllers
 {
@@ -7,9 +8,9 @@ namespace ConectaTalentos.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("register")]
-        public async Task<IActionResult> register()
+        public async Task<IActionResult> Register([FromBody] UserDTO user)
         {
-            return Ok();
+            return Ok(user);
         }
     }
 }

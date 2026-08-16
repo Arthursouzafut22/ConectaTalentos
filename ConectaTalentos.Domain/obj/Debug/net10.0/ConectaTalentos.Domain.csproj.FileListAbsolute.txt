@@ -1,0 +1,15 @@
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\bin\Debug\net10.0\ConectaTalentos.Domain.deps.json
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\bin\Debug\net10.0\ConectaTalentos.Domain.runtimeconfig.json
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\bin\Debug\net10.0\ConectaTalentos.Domain.dll
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\bin\Debug\net10.0\ConectaTalentos.Domain.pdb
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.csproj.AssemblyReference.cache
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.AssemblyInfoInputs.cache
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.AssemblyInfo.cs
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.csproj.CoreCompileInputs.cache
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.sourcelink.json
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.dll
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\refint\ConectaTalentos.Domain.dll
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.pdb
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ConectaTalentos.Domain.genruntimeconfig.cache
+C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos.Domain\obj\Debug\net10.0\ref\ConectaTalentos.Domain.dll
