@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ConectaTalentos.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConectaTalentos.Domain.Models
@@ -21,6 +22,10 @@ namespace ConectaTalentos.Domain.Models
         [Required]
         [MaxLength(255)]
         public string PasswordHash { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(50)]
+        public UserRole Role { get; set; } = UserRole.Candidate;
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

@@ -48,6 +48,10 @@ namespace ConectaTalentos.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int>("Role")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("usuarios");

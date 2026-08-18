@@ -130,4 +130,3 @@ C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos\obj\Debug\net10.0\refin
 C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos\obj\Debug\net10.0\ConectaTalentos.pdb
 C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos\obj\Debug\net10.0\ConectaTalentos.genruntimeconfig.cache
 C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos\obj\Debug\net10.0\ref\ConectaTalentos.dll
-C:\Users\55319\Documents\ConectaTalentos\ConectaTalentos\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
