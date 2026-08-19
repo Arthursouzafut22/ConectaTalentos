@@ -1,4 +1,4 @@
-﻿namespace ConectaTalentos.Application.Common
+﻿namespace ConectaTalentos.Application.Common.Responses
 {
     public class ApiResponse<T>
     {

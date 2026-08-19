@@ -1,4 +1,8 @@
-﻿using ConectaTalentos.Infrastructure.Data;
+﻿using ConectaTalentos.Application.Interfaces;
+using ConectaTalentos.Application.Services;
+using ConectaTalentos.Domain.Interfaces;
+using ConectaTalentos.Domain.Repositories;
+using ConectaTalentos.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +19,9 @@ namespace ConectaTalentos.Infrastructure.Configuration
             {
                 options.UseNpgsql(connectionString);
             });
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }

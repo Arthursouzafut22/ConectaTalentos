@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConectaTalentos.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d4d5753f27d152eb1071169beec307b4d84d60d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fc02c52176e23f52b78c4a6c2283aecb0e60061")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConectaTalentos.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConectaTalentos.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

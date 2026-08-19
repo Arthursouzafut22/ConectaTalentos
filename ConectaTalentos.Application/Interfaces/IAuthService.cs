@@ -1,4 +1,4 @@
-﻿using ConectaTalentos.Application.Common;
+﻿using ConectaTalentos.Application.Common.Responses;
 using ConectaTalentos.Application.DTOs.Account;
 
 namespace ConectaTalentos.Application.Interfaces

@@ -1,14 +1,14 @@
 [
   {
     "ContainingType": "ConectaTalentos.Controllers.AuthController",
-    "Method": "register",
+    "Method": "Register",
     "RelativePath": "v1/Auth/register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "payload",
+        "Name": "dto",
         "Type": "ConectaTalentos.Application.DTOs.Account.UserDTO",
         "IsRequired": true
       }
