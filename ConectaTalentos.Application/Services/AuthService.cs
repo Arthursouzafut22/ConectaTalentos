@@ -16,6 +16,7 @@ namespace ConectaTalentos.Application.Services
         private readonly ITokenService _token;
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthService> _logger;
+
         public AuthService(IUserRepository repository, 
             ILogger<AuthService> logger, 
             ITokenService token,
@@ -26,6 +27,7 @@ namespace ConectaTalentos.Application.Services
             _configuration = configuration;
             _logger = logger;
         }
+
         public async Task<ApiResponse<UserResponseDTO>> RegisterAsync(UserDTO dto)
         {
             if (dto.ConfirmPassword != dto.Password)
@@ -60,14 +62,17 @@ namespace ConectaTalentos.Application.Services
 
             return ApiResponse<UserResponseDTO>.SuccessResponse(userDto, "Usuário cadastrado com sucesso.");
         }
+
         private string HashPassword(string password)
         {
             return BC.BCrypt.HashPassword(password);
         }
+
         private bool VerifyPassword(string password, string passwordHash)
         {
             return BC.BCrypt.Verify(password, passwordHash);
         }
+
         public async Task<ApiResponse<UserToken>> LoginAsync(LoginDTO dto)
         {
             var user = await _repository.GetByEmail(dto.Email);
