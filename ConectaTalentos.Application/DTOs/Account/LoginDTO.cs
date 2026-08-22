@@ -2,11 +2,8 @@
 
 namespace ConectaTalentos.Application.DTOs.Account
 {
-    public class UserDTO
+    public class LoginDTO
     {
-        [Required(ErrorMessage = "Nome e obrigatório.")]
-        public string Name { get; set; } = string.Empty;
-
         [EmailAddress(ErrorMessage = "O campo E-mail não é um endereço de e-mail válido.")]
         [Required(ErrorMessage = "E-mail é obrigatório.")]
         public string Email { get; set; } = string.Empty;
@@ -14,8 +11,5 @@ namespace ConectaTalentos.Application.DTOs.Account
         [Required(ErrorMessage = "A senha é obrigatória.")]
         [MinLength(6, ErrorMessage = "A senha deve possuir no mínimo 6 caracteres.")]
         public string Password { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Confirmação de senha e obrigatório")]
-        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

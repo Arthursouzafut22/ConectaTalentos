@@ -7,7 +7,7 @@ namespace ConectaTalentos.Domain.Repositories
 {
     public class UserRepository : IUserRepository
     {
-       private readonly AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public UserRepository(AppDbContext context)
         {
@@ -20,15 +20,17 @@ namespace ConectaTalentos.Domain.Repositories
             await _context.SaveChangesAsync();
             return user;
         }
-
         public async Task<User?> GetById(int? id)
         {
             return await _context.Users.FindAsync(id);
         }
-
-        public async Task<bool> GetByEmail(string email)
+        public async Task<bool> EmailExists(string email)
         {
             return await _context.Users.AnyAsync((e) => e.Email == email);
+        }
+        public async Task<User?> GetByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync((e) => e.Email == email);
         }
     }
 }

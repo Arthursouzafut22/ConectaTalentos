@@ -6,6 +6,7 @@ namespace ConectaTalentos.Domain.Interfaces
     {
         Task<User> Create(User user);
         Task<User?> GetById(int? id);
-        Task<bool> GetByEmail(string email);
+        Task<bool> EmailExists(string email);
+        Task<User?> GetByEmail(string email);
     }
 }

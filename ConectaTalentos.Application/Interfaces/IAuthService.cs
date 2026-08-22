@@ -6,5 +6,6 @@ namespace ConectaTalentos.Application.Interfaces
     public interface IAuthService
     {
         Task<ApiResponse<UserResponseDTO>> RegisterAsync(UserDTO user);
+        Task<ApiResponse<UserToken>> LoginAsync(LoginDTO dto);
     }
 }

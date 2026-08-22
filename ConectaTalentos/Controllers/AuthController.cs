@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ConectaTalentos.Controllers
 {
-    [Route("v1/[controller]")]
     [ApiController]
+    [Route("v1/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
@@ -19,6 +19,13 @@ namespace ConectaTalentos.Controllers
         {
             var user = await _service.RegisterAsync(dto);
             return Ok(user);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO dto)
+        {
+            var login = await _service.LoginAsync(dto);
+            return Ok(login);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace ConectaTalentos.Infrastructure.Configuration
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
 
             return services;
