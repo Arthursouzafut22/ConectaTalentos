@@ -27,6 +27,18 @@ namespace ConectaTalentos.Infrastructure.Configuration
                     Description = "Informe o token JWT.",
                 });
 
+                c.TagActionsBy(api =>
+                {
+                    var controller = api.ActionDescriptor.RouteValues["controller"];
+
+                    return controller switch
+                    {
+                        "Auth" => new[] { "Autenticação" },
+                        "Jobs" => new[] { "Vagas" },
+                        _ => new[] { controller! }
+                    };
+                });
+
             });
 
             return services;

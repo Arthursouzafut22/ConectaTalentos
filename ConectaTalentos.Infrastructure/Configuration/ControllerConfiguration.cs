@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 namespace ConectaTalentos.Infrastructure.Configuration
 {
@@ -9,6 +10,11 @@ namespace ConectaTalentos.Infrastructure.Configuration
         this IServiceCollection services)
         {
             services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters
+                    .Add(new JsonStringEnumConverter());
+                })
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.InvalidModelStateResponseFactory = context =>

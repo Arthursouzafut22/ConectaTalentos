@@ -3,6 +3,7 @@ using ConectaTalentos.Application.Services;
 using ConectaTalentos.Domain.Interfaces;
 using ConectaTalentos.Domain.Repositories;
 using ConectaTalentos.Infrastructure.Data;
+using ConectaTalentos.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ namespace ConectaTalentos.Infrastructure.Configuration
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJobRepositories, JobRepositories>();
+            services.AddScoped<IJobsService, JobsServices>();
 
             return services;
         }

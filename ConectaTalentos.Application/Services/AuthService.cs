@@ -1,12 +1,11 @@
 ﻿using ConectaTalentos.Application.Common.Responses;
 using ConectaTalentos.Application.DTOs.Account;
 using ConectaTalentos.Application.Interfaces;
-using ConectaTalentos.Domain.Enums;
+using ConectaTalentos.Application.Mappings;
 using ConectaTalentos.Domain.Interfaces;
-using ConectaTalentos.Domain.Models;
+using ConectaTalentos.Infrastructure.Crypto;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using BC = BCrypt.Net;
 
 namespace ConectaTalentos.Application.Services
 {
@@ -28,10 +27,12 @@ namespace ConectaTalentos.Application.Services
             _logger = logger;
         }
 
+
         public async Task<ApiResponse<UserResponseDTO>> RegisterAsync(UserDTO dto)
         {
             if (dto.ConfirmPassword != dto.Password)
             {
+                _logger.LogInformation($"É necessário confirmar a senha de acordo com a senha informada.");
                 return ApiResponse<UserResponseDTO>.ErrorResponse(null, ResultMessages.PasswordsDoNotMatch);
             }
 
@@ -39,38 +40,18 @@ namespace ConectaTalentos.Application.Services
 
             if (existUser)
             {
+                _logger.LogInformation($"Usuário já existe no sistema, não é possível cadastrar um novo com essas credenciais");
                 return ApiResponse<UserResponseDTO>.ErrorResponse(null, ResultMessages.EmailAlreadyRegistered);
             }
 
-            var user = new User()
-            {
-                Name = dto.Name,
-                Email = dto.Email,
-                PasswordHash = HashPassword(dto.Password),
-                Role = UserRole.Candidate
-            };
+            var user = dto.ToEntityUser();
 
             var createUser = await _repository.Create(user);
             _logger.LogInformation("Criando usuário do id: {UserId}.", createUser.Id);
 
-            var userDto = new UserResponseDTO()
-            {
-                Id = createUser.Id,
-                Name = createUser.Name,
-                Email = createUser.Email
-            };
+            var userDto = createUser.ToUserResponseDTO();
 
             return ApiResponse<UserResponseDTO>.SuccessResponse(userDto, "Usuário cadastrado com sucesso.");
-        }
-
-        private string HashPassword(string password)
-        {
-            return BC.BCrypt.HashPassword(password);
-        }
-
-        private bool VerifyPassword(string password, string passwordHash)
-        {
-            return BC.BCrypt.Verify(password, passwordHash);
         }
 
         public async Task<ApiResponse<UserToken>> LoginAsync(LoginDTO dto)
@@ -83,7 +64,7 @@ namespace ConectaTalentos.Application.Services
             }
 
             _logger.LogInformation("Validando as senha do usuário.");
-            var comparePassword = VerifyPassword(dto.Password, user.PasswordHash);
+            var comparePassword = CryptoHandler.VerifyPassword(dto.Password, user.PasswordHash);
 
             if (!comparePassword)
             {

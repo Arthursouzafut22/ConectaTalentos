@@ -3,9 +3,10 @@
 namespace ConectaTalentos.Domain.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum UserRole
+    public enum WorkMode
     {
-        Candidate,
-        Recruiter
+        Remoto,
+        Presencial,
+        Híbrido
     }
 }

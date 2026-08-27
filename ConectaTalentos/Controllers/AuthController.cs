@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ConectaTalentos.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/autenticacao")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
@@ -14,7 +14,7 @@ namespace ConectaTalentos.Controllers
             _service = service;
         }
 
-        [HttpPost("register")]
+        [HttpPost("registrar")]
         public async Task<IActionResult> Register([FromBody] UserDTO dto)
         {
             var user = await _service.RegisterAsync(dto);

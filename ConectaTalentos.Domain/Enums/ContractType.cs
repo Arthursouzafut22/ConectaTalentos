@@ -3,9 +3,11 @@
 namespace ConectaTalentos.Domain.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum UserRole
+    public enum ContractType
     {
-        Candidate,
-        Recruiter
+        CLT,
+        PJ,
+        Estagio,
+        Freelancer
     }
 }

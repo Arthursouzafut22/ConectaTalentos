@@ -9,7 +9,7 @@ builder.Services.AddControllerConfiguration();
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure(builder.Configuration);
-
+builder.Services.AddInfrastructureJWT(builder.Configuration);
 builder.Services.AddInfrastructureSwagger(builder.Configuration);
 
 var app = builder.Build();

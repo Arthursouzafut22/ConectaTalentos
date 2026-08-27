@@ -1,0 +1,30 @@
+﻿using ConectaTalentos.Application.DTOs.Jobs;
+using ConectaTalentos.Application.Interfaces;
+using ConectaTalentos.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ConectaTalentos.Controllers
+{
+    [ApiController]
+    [Route("v1/vagas")]
+    public class JobsController : ControllerBase
+    {
+        private readonly IJobsService _service;
+
+        public JobsController(IJobsService service)
+        {
+            _service = service;
+        }
+
+
+        [Authorize(Roles = nameof(UserRole.Recruiter))]
+        [HttpPost("publicar-vaga")]
+        public async Task<IActionResult> CreateJob([FromBody] CreteJobsDTO dto)
+        {
+            var userId = User.FindFirst("id")?.Value;
+            var job = await _service.CreteJob(dto, int.Parse(userId));
+            return Ok(job);
+        }
+    }
+}
