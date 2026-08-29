@@ -30,6 +30,25 @@ namespace ConectaTalentos.Infrastructure.Configuration
                             message = error
                         });
                     };
+                }).AddMvcOptions(options =>
+                {
+                    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+                        value => "O campo é obrigatório.");
+
+                    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
+                        (value, fieldName) => $"O valor '{value}' não é válido para o campo '{fieldName}'.");
+
+                    options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(
+                        () => "O campo é obrigatório.");
+
+                    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(
+                        value => $"O valor '{value}' não é válido.");
+
+                    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+                        fieldName => $"O campo '{fieldName}' deve ser um número.");
+
+                    options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(
+                        () => "É necessário enviar um corpo de requisição (body) não vazio.");
                 });
 
             return services;

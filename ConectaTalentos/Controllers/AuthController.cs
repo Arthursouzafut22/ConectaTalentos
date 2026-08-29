@@ -1,6 +1,7 @@
 ﻿using ConectaTalentos.Application.DTOs.Account;
 using ConectaTalentos.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ConectaTalentos.Controllers
 {
@@ -22,6 +23,7 @@ namespace ConectaTalentos.Controllers
         }
 
         [HttpPost("login")]
+        [EnableRateLimiting("Login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
             var login = await _service.LoginAsync(dto);

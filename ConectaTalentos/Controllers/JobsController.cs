@@ -3,6 +3,7 @@ using ConectaTalentos.Application.Interfaces;
 using ConectaTalentos.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ConectaTalentos.Controllers
 {
@@ -24,9 +25,25 @@ namespace ConectaTalentos.Controllers
             return Ok(jobs);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdJobs([FromRoute] GetJobRequestDTO dto)
+        {
+            var job = await _service.GetById(dto.Id);
+            return Ok(job);
+        }
+
+        [Authorize(Roles = nameof(UserRole.Recruiter))]
+        [HttpGet("minhas")]
+        public async Task<IActionResult> GetMyJobs()
+        {
+            var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
+            var myJobs = await _service.GetMyJobs(int.Parse(userId));
+            return Ok(myJobs);
+        }
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
         [HttpPost("publicar-vaga")]
+        [EnableRateLimiting("PublicarVaga")]
         public async Task<IActionResult> CreateJob([FromBody] CreteJobsDTO dto)
         {
             var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
