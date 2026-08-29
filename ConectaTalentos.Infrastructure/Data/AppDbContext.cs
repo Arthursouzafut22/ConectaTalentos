@@ -17,6 +17,16 @@ namespace ConectaTalentos.Infrastructure.Data
                 .Property(u => u.Role)
                 .HasConversion<string>()
                 .HasMaxLength(50);
+
+            modelBuilder.Entity<Job>()
+                .Property(u => u.ContractType)
+                .HasConversion<string>()
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<Job>()
+                .Property(u => u.WorkMode)
+                .HasConversion<string>()
+                 .HasMaxLength(50);
         }
     }
 }

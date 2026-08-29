@@ -17,12 +17,19 @@ namespace ConectaTalentos.Controllers
             _service = service;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllJobs()
+        {
+            var jobs = await _service.GetAll();
+            return Ok(jobs);
+        }
+
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
         [HttpPost("publicar-vaga")]
         public async Task<IActionResult> CreateJob([FromBody] CreteJobsDTO dto)
         {
-            var userId = User.FindFirst("id")?.Value;
+            var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
             var job = await _service.CreteJob(dto, int.Parse(userId));
             return Ok(job);
         }

@@ -28,5 +28,18 @@ namespace ConectaTalentos.Application.Services
 
             return ApiResponse<JobResponseDTO>.SuccessResponse(response, "Vaga de emprego publicada com sucesso.");
         }
+
+        public async Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetAll()
+        {
+            _logger.LogInformation("Buscando todas as vagas de emprego publicadas.");
+
+            var jobs = await _repositories.GetAll();
+
+            var response = jobs.Select((j) => j.ToResponseDTO()).ToList();
+
+            _logger.LogInformation("Foram encontradas {TotalVagas} vaga(s) publicada(s).", response.Count);
+
+            return ApiResponse<IEnumerable<JobResponseDTO>>.SuccessResponse(response, "Vagas retornadas com sucesso."); ;
+        }
     }
 }

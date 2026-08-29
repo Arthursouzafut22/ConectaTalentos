@@ -6,5 +6,6 @@ namespace ConectaTalentos.Application.Interfaces
     public interface IJobsService
     {
         Task<ApiResponse<JobResponseDTO>> CreteJob(CreteJobsDTO job, int userId);
+        Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetAll();
     }
 }

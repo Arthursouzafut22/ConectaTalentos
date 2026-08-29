@@ -30,7 +30,7 @@ namespace ConectaTalentos.Application.Mappings
         {
             return new JobResponseDTO
             {
-                RecruiterId = job.RecruiterId,
+                Id = job.Id,
                 Title = job.Title,
                 CompanyName = job.CompanyName,
                 CompanyDescription = job.CompanyDescription,

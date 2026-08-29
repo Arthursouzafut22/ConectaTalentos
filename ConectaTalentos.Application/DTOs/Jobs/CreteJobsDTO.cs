@@ -31,10 +31,12 @@ namespace ConectaTalentos.Application.DTOs.Jobs
         public decimal Salary { get; set; }
 
         [property: JsonPropertyName("tipo_contrato")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required(ErrorMessage = "O tipo de contratação da vaga é obrigatório")]
         public ContractType ContractType { get; set; }
 
         [property: JsonPropertyName("modelo_trabalho")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required(ErrorMessage = "A modalidade de trabalho é obrigatória")]
         public WorkMode WorkMode { get; set; }
 
