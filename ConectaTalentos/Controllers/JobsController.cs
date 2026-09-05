@@ -1,4 +1,5 @@
-﻿using ConectaTalentos.Application.DTOs.Jobs;
+﻿using ConectaTalentos.Application.DTOs.Account;
+using ConectaTalentos.Application.DTOs.Jobs;
 using ConectaTalentos.Application.Interfaces;
 using ConectaTalentos.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -53,10 +54,20 @@ namespace ConectaTalentos.Controllers
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateJobs([FromBody] UpdateJob dto, int id)
+        public async Task<IActionResult> UpdateJob([FromBody] UpdateJob dto, int id)
         {
-            var job = await _service.UpdateJob(id, dto);
+            var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
+            var job = await _service.UpdateJob(id, int.Parse(userId), dto);
             return StatusCode(job.StatusCode, job);
+        }
+
+        [Authorize(Roles = nameof(UserRole.Recruiter))]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteJob(int id)
+        {
+            var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
+            var delete = await _service.DeleteJob(id, int.Parse(userId));
+            return StatusCode(delete.StatusCode, delete);
         }
     }
 }

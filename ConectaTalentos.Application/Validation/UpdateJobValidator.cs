@@ -32,7 +32,7 @@ namespace ConectaTalentos.Domain.Validation
                 .When(x => x.Salary is not null);
 
             RuleFor(x => x.ContractType)
-                .IsInEnum().WithMessage("ipo de contrato inválido")
+                .IsInEnum().WithMessage("Tipo de contrato inválido")
                 .When(x => x.ContractType is not null);
 
             RuleFor(x => x.WorkMode)

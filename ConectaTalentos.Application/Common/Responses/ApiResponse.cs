@@ -1,10 +1,14 @@
-﻿namespace ConectaTalentos.Application.Common.Responses
+﻿using System.Text.Json.Serialization;
+
+namespace ConectaTalentos.Application.Common.Responses
 {
     public class ApiResponse<T>
     {
         public bool Success { get; set; }
         public string Message { get; set; } = string.Empty;
         public T? Data { get; set; }
+
+        [JsonIgnore]
         public int StatusCode { get; set; }
 
         public static ApiResponse<T> Ok(T? data, string message) =>
@@ -19,5 +23,10 @@
         public static ApiResponse<T> Conflict(string message) =>
             new() { Success = false, Message = message, StatusCode = 409 };
 
-    }
+        public static ApiResponse<T> Forbidden(string message) =>
+             new() { Success = false, Message = message, StatusCode = 403 };
+
+        public static ApiResponse<T> NoContent(string message) =>
+            new() { Success = false, Message = message, StatusCode = 204 };
 }
+    }

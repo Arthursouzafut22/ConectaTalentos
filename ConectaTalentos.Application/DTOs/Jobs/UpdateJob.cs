@@ -6,19 +6,19 @@ namespace ConectaTalentos.Application.DTOs.Jobs
     public class UpdateJob
     {
         [property: JsonPropertyName("nome_vaga")]
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; set; }
 
         [property: JsonPropertyName("nome_empresa")]
-        public string CompanyName { get; set; } = string.Empty;
+        public string? CompanyName { get; set; }
 
         [property: JsonPropertyName("sobre_empresa")]
-        public string CompanyDescription { get; set; } = string.Empty;
+        public string? CompanyDescription { get; set; }
 
         [property: JsonPropertyName("tecnologias_desejadas")]
-        public string[] DesiredTechnologies { get; set; } = [];
+        public string[]? DesiredTechnologies { get; set; }
 
         [property: JsonPropertyName("localizacao")]
-        public string Location { get; set; } = string.Empty;
+        public string? Location { get; set; }
 
         [property: JsonPropertyName("salario")]
         public decimal? Salary { get; set; }
@@ -32,13 +32,13 @@ namespace ConectaTalentos.Application.DTOs.Jobs
         public WorkMode? WorkMode { get; set; }
 
         [property: JsonPropertyName("descricao_vaga")]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
 
         [property: JsonPropertyName("beneficios_vaga")]
-        public List<string> Benefits { get; set; } = [];
+        public List<string>? Benefits { get; set; }
 
         [property: JsonPropertyName("requisitos_vaga")]
-        public List<string> Requirements { get; set; } = [];
+        public List<string>? Requirements { get; set; }
 
         [JsonPropertyName("esta_ativa")]
         public bool? IsActive { get; set; }

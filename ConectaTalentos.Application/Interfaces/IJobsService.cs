@@ -9,6 +9,7 @@ namespace ConectaTalentos.Application.Interfaces
         Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetAll();
         Task<ApiResponse<JobResponseDTO>> GetById(int? id);
         Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetMyJobs(int id);
-        Task<ApiResponse<JobResponseDTO>> UpdateJob(int id, UpdateJob job);
+        Task<ApiResponse<JobResponseDTO>> UpdateJob(int id, int userId, UpdateJob job);
+        Task<ApiResponse<JobResponseDTO>> DeleteJob(int id, int userId);
     }
 }
