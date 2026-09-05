@@ -16,8 +16,8 @@ namespace ConectaTalentos.Application.Services
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthService> _logger;
 
-        public AuthService(IUserRepository repository, 
-            ILogger<AuthService> logger, 
+        public AuthService(IUserRepository repository,
+            ILogger<AuthService> logger,
             ITokenService token,
             IConfiguration configuration)
         {
@@ -33,7 +33,7 @@ namespace ConectaTalentos.Application.Services
             if (dto.ConfirmPassword != dto.Password)
             {
                 _logger.LogInformation($"É necessário confirmar a senha de acordo com a senha informada.");
-                return ApiResponse<UserResponseDTO>.ErrorResponse(null, ResultMessages.PasswordsDoNotMatch);
+                return ApiResponse<UserResponseDTO>.Conflict(ResultMessages.PasswordsDoNotMatch);
             }
 
             var existUser = await _repository.EmailExists(dto.Email);
@@ -41,7 +41,7 @@ namespace ConectaTalentos.Application.Services
             if (existUser)
             {
                 _logger.LogInformation($"Usuário já existe no sistema, não é possível cadastrar um novo com essas credenciais");
-                return ApiResponse<UserResponseDTO>.ErrorResponse(null, ResultMessages.EmailAlreadyRegistered);
+                return ApiResponse<UserResponseDTO>.Conflict(ResultMessages.EmailAlreadyRegistered);
             }
 
             var user = dto.ToEntityUser();
@@ -51,7 +51,7 @@ namespace ConectaTalentos.Application.Services
 
             var userDto = createUser.ToUserResponseDTO();
 
-            return ApiResponse<UserResponseDTO>.SuccessResponse(userDto, "Usuário cadastrado com sucesso.");
+            return ApiResponse<UserResponseDTO>.Ok(userDto, ResultMessages.UserCreatedMessage);
         }
 
         public async Task<ApiResponse<UserToken>> LoginAsync(LoginDTO dto)
@@ -60,7 +60,7 @@ namespace ConectaTalentos.Application.Services
 
             if (user is null)
             {
-                return ApiResponse<UserToken>.ErrorResponse(null, ResultMessages.InvalidCredentials);
+                return ApiResponse<UserToken>.NotFound(ResultMessages.InvalidCredentials);
             }
 
             _logger.LogInformation("Validando as senha do usuário.");
@@ -68,7 +68,7 @@ namespace ConectaTalentos.Application.Services
 
             if (!comparePassword)
             {
-                return ApiResponse<UserToken>.ErrorResponse(null, ResultMessages.InvalidCredentials);
+                return ApiResponse<UserToken>.Unauthorized(ResultMessages.InvalidCredentials);
             }
 
             var accessToken = _token.GenerateToken(user);
@@ -81,7 +81,7 @@ namespace ConectaTalentos.Application.Services
                 Token = accessToken
             };
 
-            return ApiResponse<UserToken>.SuccessResponse(payload, "Login realizado com sucesso.");
+            return ApiResponse<UserToken>.Ok(payload, ResultMessages.LoginSuccess);
         }
     }
 }

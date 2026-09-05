@@ -19,7 +19,7 @@ namespace ConectaTalentos.Controllers
         public async Task<IActionResult> Register([FromBody] UserDTO dto)
         {
             var user = await _service.RegisterAsync(dto);
-            return Ok(user);
+            return StatusCode(user.StatusCode, user);
         }
 
         [HttpPost("login")]
@@ -27,7 +27,7 @@ namespace ConectaTalentos.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
             var login = await _service.LoginAsync(dto);
-            return Ok(login);
+            return StatusCode(login.StatusCode, login);
         }
     }
 }

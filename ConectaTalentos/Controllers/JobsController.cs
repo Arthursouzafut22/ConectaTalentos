@@ -22,14 +22,14 @@ namespace ConectaTalentos.Controllers
         public async Task<IActionResult> GetAllJobs()
         {
             var jobs = await _service.GetAll();
-            return Ok(jobs);
+            return StatusCode(jobs.StatusCode, jobs);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdJobs([FromRoute] GetJobRequestDTO dto)
         {
             var job = await _service.GetById(dto.Id);
-            return Ok(job);
+            return StatusCode(job.StatusCode, job);
         }
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
@@ -38,7 +38,7 @@ namespace ConectaTalentos.Controllers
         {
             var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
             var myJobs = await _service.GetMyJobs(int.Parse(userId));
-            return Ok(myJobs);
+            return StatusCode(myJobs.StatusCode, myJobs);
         }
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
@@ -48,7 +48,15 @@ namespace ConectaTalentos.Controllers
         {
             var userId = User.FindFirst("id")?.Value ?? throw new InvalidOperationException("");
             var job = await _service.CreteJob(dto, int.Parse(userId));
-            return Ok(job);
+            return StatusCode(job.StatusCode, job);
+        }
+
+        [Authorize(Roles = nameof(UserRole.Recruiter))]
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateJobs([FromBody] UpdateJob dto, int id)
+        {
+            var job = await _service.UpdateJob(id, dto);
+            return StatusCode(job.StatusCode, job);
         }
     }
 }

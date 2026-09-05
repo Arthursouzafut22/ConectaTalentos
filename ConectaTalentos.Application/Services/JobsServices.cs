@@ -26,7 +26,7 @@ namespace ConectaTalentos.Application.Services
 
             var response = createJob.ToResponseDTO();
 
-            return ApiResponse<JobResponseDTO>.SuccessResponse(response, "Vaga de emprego publicada com sucesso.");
+            return ApiResponse<JobResponseDTO>.Ok(response, ResultMessages.PublishSuccessMessage);
         }
 
         public async Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetAll()
@@ -39,7 +39,7 @@ namespace ConectaTalentos.Application.Services
 
             _logger.LogInformation("Foram encontradas {TotalVagas} vaga(s) publicada(s).", response.Count);
 
-            return ApiResponse<IEnumerable<JobResponseDTO>>.SuccessResponse(response, "Vagas retornadas com sucesso."); 
+            return ApiResponse<IEnumerable<JobResponseDTO>>.Ok(response, ResultMessages.JobsRetrievedMessage); 
         }
 
         public async Task<ApiResponse<JobResponseDTO>> GetById(int? id)
@@ -51,12 +51,12 @@ namespace ConectaTalentos.Application.Services
             if (job is null)
             {
                 _logger.LogWarning("Vaga com Id {Id} não encontrada.", id);
-                return ApiResponse<JobResponseDTO>.ErrorResponse(null, "Vaga não encontrada.");
+                return ApiResponse<JobResponseDTO>.NotFound(ResultMessages.JobNotFoundMessage);
             }
 
             var response = job?.ToResponseDTO();
 
-            return ApiResponse<JobResponseDTO>.SuccessResponse(response, "Vaga encontrada com sucesso.");
+            return ApiResponse<JobResponseDTO>.Ok(response, "Vaga encontrada com sucesso.");
         }
 
         public async Task<ApiResponse<IEnumerable<JobResponseDTO>>> GetMyJobs(int id)
@@ -66,7 +66,22 @@ namespace ConectaTalentos.Application.Services
             var response = jobs.Where(j => j.RecruiterId == id)
                 .Select(j => j.ToResponseDTO());
 
-            return ApiResponse<IEnumerable<JobResponseDTO>>.SuccessResponse(response, "Vagas encontradas com sucesso.");
+            return ApiResponse<IEnumerable<JobResponseDTO>>.Ok(response, "Vagas encontradas com sucesso.");
+        }
+
+        public async Task<ApiResponse<JobResponseDTO>> UpdateJob(int id, UpdateJob job)
+        {
+            var existJob = await _repositories.GetById(id);
+
+            if(existJob is null)
+            {
+                return ApiResponse<JobResponseDTO>.NotFound(ResultMessages.JobNotFoundMessage);
+            }
+
+            var updateJob = await _repositories.Update(existJob);
+            var response = updateJob?.ToResponseDTO();
+
+            return ApiResponse<JobResponseDTO>.Ok(response, "Vagas atualizada com sucesso.");
         }
     }
 }
