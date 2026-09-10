@@ -8,6 +8,7 @@ namespace ConectaTalentos.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Candidacy> Candidacys { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +28,10 @@ namespace ConectaTalentos.Infrastructure.Data
                 .Property(u => u.WorkMode)
                 .HasConversion<string>()
                  .HasMaxLength(50);
+
+            modelBuilder.Entity<Candidacy>()
+                .HasIndex(c => new { c.UserId, c.JobId })
+                .IsUnique();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ConectaTalentos.Domain.Enums;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,5 +30,6 @@ namespace ConectaTalentos.Domain.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public ICollection<Candidacy> Candidacy { get; set; } = new Collection<Candidacy>();
     }
 }

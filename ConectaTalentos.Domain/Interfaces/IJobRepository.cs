@@ -2,7 +2,7 @@
 
 namespace ConectaTalentos.Domain.Interfaces
 {
-    public interface IJobRepositories
+    public interface IJobRepository
     {
         Task<Job> Create(Job job);
         Task<IEnumerable<Job>> GetAll();

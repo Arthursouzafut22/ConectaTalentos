@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ConectaTalentos.Application.Services
 {
-    public class JobsServices : IJobsService
+    public class JobsService : IJobsService
     {
-        private readonly IJobRepositories _repositories;
-        private readonly ILogger<JobsServices> _logger;
+        private readonly IJobRepository _repositories;
+        private readonly ILogger<JobsService> _logger;
 
-        public JobsServices(IJobRepositories repositories, ILogger<JobsServices> logger)
+        public JobsService(IJobRepository repositories, ILogger<JobsService> logger)
         {
             _repositories = repositories;
             _logger = logger;

@@ -28,5 +28,8 @@ namespace ConectaTalentos.Application.Common.Responses
 
         public static ApiResponse<T> NoContent(string message) =>
             new() { Success = false, Message = message, StatusCode = 204 };
-}
+
+        public static ApiResponse<T> BadRequest(string message) =>
+            new() { Success = false, Message = message, StatusCode = 400 };
     }
+}

@@ -1,3 +1,4 @@
+using ConectaTalentos.Application.Services;
 using ConectaTalentos.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddInfrastructureJWT(builder.Configuration);
 builder.Services.AddInfrastructureValidators();
 builder.Services.AddInfrastructureSwagger(builder.Configuration);
 builder.Services.AddRateLimitingConfiguration();
+
+//builder.Services.AddSingleton<BlobStorageService>();
 
 var app = builder.Build();
 

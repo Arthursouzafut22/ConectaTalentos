@@ -25,8 +25,11 @@ namespace ConectaTalentos.Infrastructure.Configuration
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IJobRepositories, JobRepositories>();
-            services.AddScoped<IJobsService, JobsServices>();
+            services.AddScoped<IJobRepository, JobRepository>();
+            services.AddScoped<IJobsService, JobsService>();
+            services.AddScoped<ICandidacyRepository, CandidacyRepository>();
+            services.AddScoped<ICandidacyService, CandidacyService>();
+            services.AddHttpClient<ISupabaseStorageService, SupabaseStorageService>();
 
             return services;
         }

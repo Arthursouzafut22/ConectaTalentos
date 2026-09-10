@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConectaTalentos.Infrastructure.Repositories
 {
-    public class JobRepositories : IJobRepositories
+    public class JobRepository : IJobRepository
     {
         private readonly AppDbContext _context;
 
-        public JobRepositories(AppDbContext context)
+        public JobRepository(AppDbContext context)
         {
             _context = context;
         }

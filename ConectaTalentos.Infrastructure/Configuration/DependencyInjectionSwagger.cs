@@ -35,6 +35,7 @@ namespace ConectaTalentos.Infrastructure.Configuration
                     {
                         "Auth" => new[] { "Autenticação" },
                         "Jobs" => new[] { "Vagas" },
+                        "Candidacys" => new[] { "Candidaturas" },
                         _ => new[] { controller! }
                     };
                 });
