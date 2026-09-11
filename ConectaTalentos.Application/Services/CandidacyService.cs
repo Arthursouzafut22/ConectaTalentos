@@ -36,31 +36,31 @@ namespace ConectaTalentos.Application.Services
             if (file is null || file.Length == 0)
             {
                 _logger.LogWarning("Tentativa de upload com arquivo nulo ou vazio.");
-                return ApiResponse<CandidacyResponseDTO>.BadRequest("Arquivo invalido");
+                return ApiResponse<CandidacyResponseDTO>.BadRequest(ResultMessages.IsFileInvalid);
             }
 
             if (!allowedTypes.Contains(file.ContentType))
             {
-                _logger.LogWarning("Tentativa de upload com arquivo não permitido");
-                return ApiResponse<CandidacyResponseDTO>.BadRequest("Apenas arquivos PDF são permitidos.");
+                _logger.LogWarning("Tentativa de upload com tipo de arquivo não permitido");
+                return ApiResponse<CandidacyResponseDTO>.BadRequest(ResultMessages.InvalidFileTypeMessage);
             }
 
             if (file.Length > MaxFileSizeBytes)
             {
                 _logger.LogWarning("Tentativa de upload com arquivo acima do tamanho permitido (5MB)");
-                return ApiResponse<CandidacyResponseDTO>.BadRequest("O arquivo deve ter no máximo 5MB.");
+                return ApiResponse<CandidacyResponseDTO>.BadRequest(ResultMessages.MaxFileSizeMessage);
             }
 
             if (existsJob is null)
             {
                 _logger.LogWarning("Vaga com Id {Id} não encontrada.", jobId);
-                return ApiResponse<CandidacyResponseDTO>.NotFound("Vaga não encontrada.");
+                return ApiResponse<CandidacyResponseDTO>.NotFound(ResultMessages.JobNotFoundMessage);
             }
 
             if (existsCandidacy)
             {
                 _logger.LogWarning("Tentativa de candidatura duplicada para a mesma vaga.");
-                return ApiResponse<CandidacyResponseDTO>.Conflict("Usuário já se candidatou a esta vaga.");
+                return ApiResponse<CandidacyResponseDTO>.Conflict(ResultMessages.DuplicateApplicationMessage);
             }
 
             var uploadUrl = await _storage.UploadFileloAsync(file);
@@ -69,7 +69,7 @@ namespace ConectaTalentos.Application.Services
             var response = CandidacyMappingExtensions.ToResponse(file.FileName, create.CurriculumUrl);
 
 
-            return ApiResponse<CandidacyResponseDTO>.Ok(response, "Candidatura realizada com sucesso.");
+            return ApiResponse<CandidacyResponseDTO>.Ok(response, ResultMessages.ApplicationSuccessMessage);
         }
     }
 }

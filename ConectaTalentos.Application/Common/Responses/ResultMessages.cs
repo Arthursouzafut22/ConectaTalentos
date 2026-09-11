@@ -14,5 +14,10 @@
         public static string NoPermissionToEditJob { get; private set; } = "Você não tem permissão para editar esta vaga.";
         public static string JobUpdatedSuccessfully { get; private set; } = "Vaga atualizada com sucesso.";
         public static string JobDeletedSuccessfully { get; private set; } = "Vaga excluida com sucesso.";
+        public static string IsFileInvalid { get; private set; } = "Arquivo invalido";
+        public static string InvalidFileTypeMessage { get; private set; } = "Apenas arquivos PDF são permitidos.";
+        public static string MaxFileSizeMessage { get; private set; } = "O arquivo deve ter no máximo 5MB.";
+        public static string DuplicateApplicationMessage { get; private set; } = "Usuário já se candidatou a esta vaga.";
+        public static string ApplicationSuccessMessage { get; private set; } = "Candidatura realizada com sucesso.";
     }
 }
