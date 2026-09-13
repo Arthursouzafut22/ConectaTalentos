@@ -23,5 +23,18 @@ namespace ConectaTalentos.Application.Mappings
                 FileUrl = fileUrl
             };
         }
+
+        public static MyCandidacyResponseDTO ToResponseMyCandidacy(Candidacy candidacy)
+        {
+            return new MyCandidacyResponseDTO
+            {
+                Id = candidacy.Id,
+                Status = candidacy.Status,
+                Title = candidacy?.Job?.Title,
+                CompanyName = candidacy?.Job?.CompanyName,
+                WorkMode = candidacy.Job.WorkMode,
+                ApplicationDate = candidacy.ApplicationDate
+            };
+        }
     }
 }

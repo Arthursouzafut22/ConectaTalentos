@@ -32,6 +32,10 @@ namespace ConectaTalentos.Infrastructure.Data
             modelBuilder.Entity<Candidacy>()
                 .HasIndex(c => new { c.UserId, c.JobId })
                 .IsUnique();
+
+            modelBuilder.Entity<Candidacy>()
+                .Property(c => c.Status)
+                .HasConversion<string>();
         }
     }
 }

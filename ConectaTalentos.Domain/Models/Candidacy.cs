@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ConectaTalentos.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConectaTalentos.Domain.Models
@@ -23,6 +24,9 @@ namespace ConectaTalentos.Domain.Models
 
         [Required]
         public string CurriculumUrl { get; set; } = string.Empty;
+
+        [Required]
+        public ApplicationStatus Status { get; set; } = ApplicationStatus.CurriculoEnviado;
         public DateTime ApplicationDate { get; set; } = DateTime.UtcNow;
 
     }

@@ -3,6 +3,7 @@ using ConectaTalentos.Application.DTOs.Candidacys;
 using ConectaTalentos.Application.Interfaces;
 using ConectaTalentos.Application.Mappings;
 using ConectaTalentos.Domain.Interfaces;
+using ConectaTalentos.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -70,6 +71,60 @@ namespace ConectaTalentos.Application.Services
 
 
             return ApiResponse<CandidacyResponseDTO>.Ok(response, ResultMessages.ApplicationSuccessMessage);
+        }
+
+        public async Task<ApiResponse<IEnumerable<MyCandidacyResponseDTO>>> MyCandidacys(int userId)
+        {
+            var myCandidacys = await _repository.GetAll(userId);
+            var response = myCandidacys.Select(x => CandidacyMappingExtensions.ToResponseMyCandidacy(x));
+
+            return ApiResponse<IEnumerable<MyCandidacyResponseDTO>>.Ok(response, ResultMessages.CandidacysSuccessMessage);
+        }
+
+        public async Task<ApiResponse<string>> DownloadCurriculum(int id, int userId)
+        {
+            var candidacy = await _repository.GetById(id);
+
+            if (candidacy is null)
+            {
+                _logger.LogWarning("Candidatura com Id {Id} não encontrada.", id);
+                return ApiResponse<string>.NotFound(ResultMessages.CandidacyNotFoundMessage);
+            }
+
+            if (candidacy.UserId != userId)
+            {
+                _logger.LogWarning("Tentativa de acesso indevido ao currículo {CandidacyId}.", id);
+                return ApiResponse<string>.NotFound(ResultMessages.DownloadForbiddenMessage);
+            }
+
+            return ApiResponse<string>.Ok(candidacy.CurriculumUrl, ResultMessages.CurriculumUrlSuccessMessage);
+        }
+
+        public async Task<ApiResponse<MyCandidacyResponseDTO>> UpdatStatusCandidacys(
+            int id,
+            int userId, 
+            UpdatStatusDTO dto)
+        {
+            var candidacy = await _repository.GetById(id);
+
+            if (candidacy is null)
+            {
+                _logger.LogWarning("Candidatura com Id {Id} não encontrada.", id);
+                return ApiResponse<MyCandidacyResponseDTO>.NotFound(ResultMessages.CandidacyNotFoundMessage);
+            }
+
+            if (candidacy.UserId != userId)
+            {
+                _logger.LogWarning("Tentativa de acesso indevido ao currículo {CandidacyId}.", id);
+                return ApiResponse<MyCandidacyResponseDTO>.NotFound(ResultMessages.DownloadForbiddenMessage);
+            }
+
+            candidacy.Status = dto.Status;
+
+            var updateCandidacy = await _repository.Update(candidacy) ?? new();
+            var response = CandidacyMappingExtensions.ToResponseMyCandidacy(updateCandidacy);
+
+            return ApiResponse<MyCandidacyResponseDTO>.Ok(response, ResultMessages.CurriculumUrlSuccessMessage);
         }
     }
 }
