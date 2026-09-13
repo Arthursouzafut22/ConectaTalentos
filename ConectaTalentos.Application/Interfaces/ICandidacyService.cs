@@ -9,6 +9,6 @@ namespace ConectaTalentos.Application.Interfaces
         Task<ApiResponse<CandidacyResponseDTO>> Apply(int jobId, int userId, IFormFile file);
         Task<ApiResponse<IEnumerable<MyCandidacyResponseDTO>>> MyCandidacys(int userId);
         Task<ApiResponse<string>> DownloadCurriculum(int id, int userId);
-        Task<ApiResponse<MyCandidacyResponseDTO>> UpdatStatusCandidacys(int id, int userId, UpdatStatusDTO dto);
+        Task<ApiResponse<MyCandidacyResponseDTO>> UpdateStatusCandidacys(int id, int userId, UpdatStatusDTO dto);
     }
 }

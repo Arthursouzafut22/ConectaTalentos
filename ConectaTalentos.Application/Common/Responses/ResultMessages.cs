@@ -23,5 +23,7 @@
         public static string CandidacyNotFoundMessage { get; } = "Candidatura não localizada.";
         public static string CurriculumUrlSuccessMessage { get; } = "URL do currículo obtida com sucesso.";
         public static string DownloadForbiddenMessage { get; } = "Você não tem permissão para baixar esse recurso.";
+        public static string UpdateStatusForbiddenMessage { get; } = "Você não tem permissão para editar o status dessa candidatura.";
+        public static string UpdateStatusSuccessMessage { get; } = "Status da candidatura atualizado com sucesso.";
     }
 }

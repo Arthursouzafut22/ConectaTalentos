@@ -33,7 +33,7 @@ namespace ConectaTalentos.Controllers
         }
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
-        [HttpGet("minhas")]
+        [HttpGet("minhas-publicadas")]
         public async Task<IActionResult> GetMyJobs()
         {
             var userId = User.FindFirst("id")?.Value

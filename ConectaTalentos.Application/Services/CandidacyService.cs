@@ -3,7 +3,6 @@ using ConectaTalentos.Application.DTOs.Candidacys;
 using ConectaTalentos.Application.Interfaces;
 using ConectaTalentos.Application.Mappings;
 using ConectaTalentos.Domain.Interfaces;
-using ConectaTalentos.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -94,13 +93,13 @@ namespace ConectaTalentos.Application.Services
             if (candidacy.UserId != userId)
             {
                 _logger.LogWarning("Tentativa de acesso indevido ao currículo {CandidacyId}.", id);
-                return ApiResponse<string>.NotFound(ResultMessages.DownloadForbiddenMessage);
+                return ApiResponse<string>.Forbidden(ResultMessages.DownloadForbiddenMessage);
             }
 
             return ApiResponse<string>.Ok(candidacy.CurriculumUrl, ResultMessages.CurriculumUrlSuccessMessage);
         }
 
-        public async Task<ApiResponse<MyCandidacyResponseDTO>> UpdatStatusCandidacys(
+        public async Task<ApiResponse<MyCandidacyResponseDTO>> UpdateStatusCandidacys(
             int id,
             int userId, 
             UpdatStatusDTO dto)
@@ -113,18 +112,21 @@ namespace ConectaTalentos.Application.Services
                 return ApiResponse<MyCandidacyResponseDTO>.NotFound(ResultMessages.CandidacyNotFoundMessage);
             }
 
-            if (candidacy.UserId != userId)
+            var job = await _jobRepository.GetById(candidacy.JobId);
+            var recruiterId = job?.RecruiterId;
+
+            if (recruiterId != userId)
             {
-                _logger.LogWarning("Tentativa de acesso indevido ao currículo {CandidacyId}.", id);
-                return ApiResponse<MyCandidacyResponseDTO>.NotFound(ResultMessages.DownloadForbiddenMessage);
+                _logger.LogWarning("Tentativa de editar candidatura de outro recrutador. UserId: {UserId}.", userId);
+                return ApiResponse<MyCandidacyResponseDTO>.Forbidden(ResultMessages.UpdateStatusForbiddenMessage);
             }
 
-            candidacy.Status = dto.Status;
+            candidacy?.Status = dto.Status;
 
-            var updateCandidacy = await _repository.Update(candidacy) ?? new();
+            var updateCandidacy = await _repository.Update(candidacy); ;
             var response = CandidacyMappingExtensions.ToResponseMyCandidacy(updateCandidacy);
 
-            return ApiResponse<MyCandidacyResponseDTO>.Ok(response, ResultMessages.CurriculumUrlSuccessMessage);
+            return ApiResponse<MyCandidacyResponseDTO>.Ok(response, ResultMessages.UpdateStatusSuccessMessage);
         }
     }
 }

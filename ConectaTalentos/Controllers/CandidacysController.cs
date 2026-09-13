@@ -52,10 +52,13 @@ namespace ConectaTalentos.Controllers
         }
 
         [Authorize(Roles = nameof(UserRole.Recruiter))]
-        [HttpPut("{id}/status")]
+        [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdatStatusCandidacys(int id, [FromBody] UpdatStatusDTO dto)
         {
-            return StatusCode(200);
+            var userId = User.FindFirst("id")?.Value
+                ?? throw new InvalidOperationException("ID do usuário não encontrado.");
+            var status = await _service.UpdateStatusCandidacys(id, int.Parse(userId), dto);
+            return StatusCode(status.StatusCode, status);
         }
     }
 }
