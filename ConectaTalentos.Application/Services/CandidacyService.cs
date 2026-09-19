@@ -1,5 +1,6 @@
 ﻿using ConectaTalentos.Application.Common.Responses;
 using ConectaTalentos.Application.DTOs.Candidacys;
+using ConectaTalentos.Application.DTOs.Email;
 using ConectaTalentos.Application.Interfaces;
 using ConectaTalentos.Application.Mappings;
 using ConectaTalentos.Domain.Interfaces;
@@ -14,23 +15,30 @@ namespace ConectaTalentos.Application.Services
         private readonly IJobRepository _jobRepository;
         private readonly ICandidacyRepository _repository;
         private readonly ILogger<CandidacyService> _logger;
+        private readonly IEmailQueue _emailQueue;
+        private readonly IUserRepository _userRepository;
         private const long MaxFileSizeBytes = 5 * 1024 * 1024;
 
         public CandidacyService(
             ISupabaseStorageService storage,
             IJobRepository jobRepository,
             ICandidacyRepository repository,
-            ILogger<CandidacyService> logger)
+            ILogger<CandidacyService> logger,
+            IEmailQueue emailQueue,
+            IUserRepository userRepository)
         {
             _storage = storage;
             _jobRepository = jobRepository;
             _repository = repository;
             _logger = logger;
+            _emailQueue = emailQueue;
+            _userRepository = userRepository;
         }
         public async Task<ApiResponse<CandidacyResponseDTO>> Apply(int jobId, int userId, IFormFile file)
         {
             var existsCandidacy = await _repository.ExistsCandidacyForJob(jobId, userId);
             var existsJob = await _jobRepository.GetById(jobId);
+            var user = await _userRepository.GetById(userId);
             var allowedTypes = new[] { "application/pdf" };
 
             if (file is null || file.Length == 0)
@@ -57,6 +65,12 @@ namespace ConectaTalentos.Application.Services
                 return ApiResponse<CandidacyResponseDTO>.NotFound(ResultMessages.JobNotFoundMessage);
             }
 
+            if (user is null)
+            {
+                _logger.LogWarning("Usuario com Id {Id} não encontrado.", userId);
+                return ApiResponse<CandidacyResponseDTO>.NotFound(ResultMessages.JobNotFoundMessage);
+            }
+
             if (existsCandidacy)
             {
                 _logger.LogWarning("Tentativa de candidatura duplicada para a mesma vaga.");
@@ -67,6 +81,13 @@ namespace ConectaTalentos.Application.Services
             var candidacy = CandidacyMappingExtensions.ToEntity(jobId, userId, uploadUrl);
             var create = await _repository.Create(candidacy);
             var response = CandidacyMappingExtensions.ToResponse(file.FileName, create.CurriculumUrl);
+
+            _emailQueue.Enfileirar(new EmailMensagem(
+                Para: user.Email,
+                Assunto: "Candidatura recebida com sucesso",
+                Corpo: $"<p>Olá {user.Name}, recebemos sua candidatura!</p>" +
+                $"<p>Recebemos sua candidatura para a vaga com sucesso. \r\n Em breve entraremos em contato.</p>"
+            ));
 
 
             return ApiResponse<CandidacyResponseDTO>.Ok(response, ResultMessages.ApplicationSuccessMessage);
@@ -101,7 +122,7 @@ namespace ConectaTalentos.Application.Services
 
         public async Task<ApiResponse<MyCandidacyResponseDTO>> UpdateStatusCandidacys(
             int id,
-            int userId, 
+            int userId,
             UpdatStatusDTO dto)
         {
             var candidacy = await _repository.GetById(id);

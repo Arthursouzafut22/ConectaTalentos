@@ -3,7 +3,9 @@ using ConectaTalentos.Application.Services;
 using ConectaTalentos.Domain.Interfaces;
 using ConectaTalentos.Domain.Repositories;
 using ConectaTalentos.Infrastructure.Data;
+using ConectaTalentos.Infrastructure.Queues;
 using ConectaTalentos.Infrastructure.Repositories;
+using ConectaTalentos.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +24,6 @@ namespace ConectaTalentos.Infrastructure.Configuration
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJobRepository, JobRepository>();
@@ -30,6 +31,14 @@ namespace ConectaTalentos.Infrastructure.Configuration
             services.AddScoped<ICandidacyRepository, CandidacyRepository>();
             services.AddScoped<ICandidacyService, CandidacyService>();
             services.AddHttpClient<ISupabaseStorageService, SupabaseStorageService>();
+
+            services.Configure<EmailSettings>(configuration.GetSection("Email"));
+
+            services.AddSingleton<IEmailQueue, EmailQueue>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            
+
+            services.AddHostedService<EmailBackgroundService>();
 
             return services;
         }
