@@ -31,6 +31,7 @@ Repositório de uma **API REST** que conecta candidatos e recrutadores. A plataf
 - ✅ Acompanhamento de candidaturas e status
 - ✅ Download de currículo em PDF
 - ✅ Gerenciamento de perfil
+- ✅ Fila de processamento de e-mails com Background Service
 - ✅ Documentação interativa via Swagger
 
 ## 🚀 Recursos Utilizados
@@ -90,7 +91,7 @@ Repositório de uma **API REST** que conecta candidatos e recrutadores. A plataf
 
 <p>
   <a href="https://github.com/Arthursouzafut22"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"/></a>
-  <a href="https://linkedin.com/in/arthursouza"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+  <a href="https://www.linkedin.com/in/arthur-souza-588168256/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
 </p>
 
 ---
