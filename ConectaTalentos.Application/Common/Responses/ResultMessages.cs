@@ -3,6 +3,7 @@
     public static class ResultMessages
     {
         public static string UserCreatedMessage { get; } = "Usuário cadastrado com sucesso.";
+        public static string UserDoesNotExist { get; } = "Usuário não existe";
         public static string EmailAlreadyRegistered { get; } = "E-mail já cadastrado.";
         public static string PasswordsDoNotMatch { get; } = "As senhas não conferem.";
         public static string InvalidCredentials { get; } = "Email ou senha inválidos";
@@ -25,5 +26,7 @@
         public static string DownloadForbiddenMessage { get; } = "Você não tem permissão para baixar esse recurso.";
         public static string UpdateStatusForbiddenMessage { get; } = "Você não tem permissão para editar o status dessa candidatura.";
         public static string UpdateStatusSuccessMessage { get; } = "Status da candidatura atualizado com sucesso.";
+        public static string CandidatesRetrieved { get; } = "Candidatos retornados com sucesso.";
+        public static string CandidatesAccessDenied { get; } = "Você não tem permissão para acessar os candidatos dessa vaga.";
     }
 }

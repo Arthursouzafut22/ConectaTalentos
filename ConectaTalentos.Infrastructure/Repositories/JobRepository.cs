@@ -27,6 +27,13 @@ namespace ConectaTalentos.Infrastructure.Repositories
         {
             return await _context.Jobs.FindAsync(id);
         }
+        public async Task<Job?> GetJobWithCandidaciesAsync(int jobId)
+        {
+            return await _context.Jobs
+                .Include(j => j.Candidacy)
+                .ThenInclude(j => j.User)
+                .FirstOrDefaultAsync(j => j.Id == jobId);
+        }
         public async Task<Job?> Update(Job job)
         {
             var existingJob = await GetById(job.Id);

@@ -30,6 +30,7 @@ namespace ConectaTalentos.Infrastructure.Configuration
             services.AddScoped<IJobsService, JobsService>();
             services.AddScoped<ICandidacyRepository, CandidacyRepository>();
             services.AddScoped<ICandidacyService, CandidacyService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddHttpClient<ISupabaseStorageService, SupabaseStorageService>();
 
             services.Configure<EmailSettings>(configuration.GetSection("Email"));

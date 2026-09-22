@@ -36,5 +36,16 @@ namespace ConectaTalentos.Application.Mappings
                 ApplicationDate = candidacy.ApplicationDate
             };
         }
+
+        public static CandidatesResponseDTO ToCandidatesResponse(Candidacy candidacy)
+        {
+            return new CandidatesResponseDTO()
+            {
+                Id = candidacy.UserId,
+                Name = candidacy?.User?.Name,
+                Email = candidacy?.User?.Email,
+                CurriculumUrl = candidacy?.CurriculumUrl
+            };
+        }
     }
 }

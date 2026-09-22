@@ -36,9 +36,9 @@ namespace ConectaTalentos.Controllers
         [HttpGet("minhas-publicadas")]
         public async Task<IActionResult> GetMyJobs()
         {
-            var userId = User.FindFirst("id")?.Value
-                ?? throw new InvalidOperationException("ID do usuário não encontrado.");
+            var userId = User.FindFirst("id")!.Value;
             var myJobs = await _service.GetMyJobs(int.Parse(userId));
+
             return StatusCode(myJobs.StatusCode, myJobs);
         }
 
@@ -47,8 +47,7 @@ namespace ConectaTalentos.Controllers
         [EnableRateLimiting("PublicarVaga")]
         public async Task<IActionResult> CreateJob([FromBody] CreteJobsDTO dto)
         {
-            var userId = User.FindFirst("id")?.Value
-                ?? throw new InvalidOperationException("ID do usuário não encontrado.");
+            var userId = User.FindFirst("id")!.Value;
             var job = await _service.CreteJob(dto, int.Parse(userId));
 
             return StatusCode(job.StatusCode, job);
@@ -58,8 +57,7 @@ namespace ConectaTalentos.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateJob([FromBody] UpdateJob dto, int id)
         {
-            var userId = User.FindFirst("id")?.Value
-                ?? throw new InvalidOperationException("ID do usuário não encontrado.");
+            var userId = User.FindFirst("id")!.Value;
             var job = await _service.UpdateJob(id, int.Parse(userId), dto);
 
             return StatusCode(job.StatusCode, job);
@@ -69,8 +67,7 @@ namespace ConectaTalentos.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJob(int id)
         {
-            var userId = User.FindFirst("id")?.Value
-                ?? throw new InvalidOperationException("ID do usuário não encontrado.");
+            var userId = User.FindFirst("id")!.Value;
             var delete = await _service.DeleteJob(id, int.Parse(userId));
 
             return StatusCode(delete.StatusCode, delete);

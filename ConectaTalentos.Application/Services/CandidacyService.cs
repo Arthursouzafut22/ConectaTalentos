@@ -19,13 +19,9 @@ namespace ConectaTalentos.Application.Services
         private readonly IUserRepository _userRepository;
         private const long MaxFileSizeBytes = 5 * 1024 * 1024;
 
-        public CandidacyService(
-            ISupabaseStorageService storage,
-            IJobRepository jobRepository,
-            ICandidacyRepository repository,
-            ILogger<CandidacyService> logger,
-            IEmailQueue emailQueue,
-            IUserRepository userRepository)
+        public CandidacyService(ISupabaseStorageService storage, IJobRepository jobRepository,
+            ICandidacyRepository repository, ILogger<CandidacyService> logger,
+            IEmailQueue emailQueue, IUserRepository userRepository)
         {
             _storage = storage;
             _jobRepository = jobRepository;
@@ -89,7 +85,6 @@ namespace ConectaTalentos.Application.Services
                 $"<p>Recebemos sua candidatura para a vaga com sucesso. \r\n Em breve entraremos em contato.</p>"
             ));
 
-
             return ApiResponse<CandidacyResponseDTO>.Ok(response, ResultMessages.ApplicationSuccessMessage);
         }
 
@@ -149,5 +144,28 @@ namespace ConectaTalentos.Application.Services
 
             return ApiResponse<MyCandidacyResponseDTO>.Ok(response, ResultMessages.UpdateStatusSuccessMessage);
         }
+
+        public async Task<ApiResponse<IEnumerable<CandidatesResponseDTO>>> GetCandidaciesByJobId(int id, int userId)
+        {
+            var job = await _jobRepository.GetJobWithCandidaciesAsync(id);
+
+            if (job is null)
+            {
+                _logger.LogWarning("Vaga com Id {Id} não encontrada.", id);
+                return ApiResponse<IEnumerable<CandidatesResponseDTO>>.NotFound(ResultMessages.JobNotFoundMessage);
+            }
+
+            if (job.RecruiterId != userId)
+            {
+                _logger.LogWarning("Tentativa acessar candidatos de outro recrutador. UserId: {UserId}.", userId);
+                return ApiResponse<IEnumerable<CandidatesResponseDTO>>.Forbidden(ResultMessages.CandidatesAccessDenied);
+            }
+
+            var response = job.Candidacy.Select(x => CandidacyMappingExtensions.ToCandidatesResponse(x));
+
+            return ApiResponse<IEnumerable<CandidatesResponseDTO>>.Ok(response, ResultMessages.CandidatesRetrieved);
+        }
     }
 }
+
+
